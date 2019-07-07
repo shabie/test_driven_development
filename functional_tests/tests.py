@@ -3,10 +3,11 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 import time
+import os
 chromeOptions = webdriver.ChromeOptions()
 chromeOptions.add_experimental_option('useAutomationExtension', False)
-# chromeOptions.add_argument('--disable-gpu')
-# chromeOptions.add_argument('--headless')
+chromeOptions.add_argument('--disable-gpu')
+chromeOptions.add_argument('--headless')
 
 MAX_WAIT = 10
 
@@ -15,6 +16,9 @@ class NewVisitorTest(StaticLiveServerTestCase):  # eliminates the need for start
 
     def setUp(self) -> None:
         self.browser = webdriver.Chrome(desired_capabilities=chromeOptions.to_capabilities())
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://' + staging_server
 
     def tearDown(self) -> None:
         self.browser.quit()
