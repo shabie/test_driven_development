@@ -1,17 +1,17 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 import time
 chromeOptions = webdriver.ChromeOptions()
 chromeOptions.add_experimental_option('useAutomationExtension', False)
-chromeOptions.add_argument('--disable-gpu')
-chromeOptions.add_argument('--headless')
+# chromeOptions.add_argument('--disable-gpu')
+# chromeOptions.add_argument('--headless')
 
 MAX_WAIT = 10
 
 
-class NewVisitorTest(LiveServerTestCase):  # eliminates the need for starting the test server also
+class NewVisitorTest(StaticLiveServerTestCase):  # eliminates the need for starting the test server also
 
     def setUp(self) -> None:
         self.browser = webdriver.Chrome(desired_capabilities=chromeOptions.to_capabilities())
@@ -127,12 +127,12 @@ class NewVisitorTest(LiveServerTestCase):  # eliminates the need for starting th
         # She notices the input box is nicely centered
         inputbox = self.browser.find_element_by_id('id_new_item')
         box_center_loc = inputbox.location['x'] + inputbox.size['width'] / 2
-        self.assertAlmostEqual(box_center_loc, 512,delta=10)
+        self.assertAlmostEqual(box_center_loc, 512, delta=10)
 
         # She starts a new list and sees the input is nicely centered there too
         inputbox.send_keys('testing')
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: testing')
-        inputbox = self.browser.find_elements_by_tag_name('id_new_item')
+        inputbox = self.browser.find_element_by_id('id_new_item')
         box_center_loc = inputbox.location['x'] + inputbox.size['width'] / 2
         self.assertAlmostEqual(box_center_loc, 512, delta=10)
