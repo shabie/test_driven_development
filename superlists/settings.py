@@ -25,7 +25,7 @@ SECRET_KEY = 'mwt#tggp=f$k5z64-=)^d_a3n_965yu1!s!bm(qi34ynqjp_ni'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mbc-eu-web-ftvso2.azurewebsites.net']
 
 
 # Application definition
