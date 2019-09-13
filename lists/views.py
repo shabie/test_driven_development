@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from lists.models import Item, List
+import os
+os.environ['CHAMPU'] = 'lala'
 
 
 # Create your views here.
 def home_page(request):
-    return render(request, 'home.html')
+    champu = os.environ['CHAMPU']
+    return render(request, 'home.html', {champu})
 
 
 def new_list(request):
